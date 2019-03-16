@@ -17,15 +17,15 @@ class UsersController:
             user_details = [email, firstname, lastname, password]
             errors = Validator.validate(user_details, email)
             if len(errors) > 0:
-                return jsonify({"errors": errors})
+                return jsonify({"errors": errors}), 400
             for user in user_list.get_all_users():
                 if user["email"] == email:
-                    return jsonify({"messages": "Opps!.. ..Email already exists!"})
+                    return jsonify({"messages": "Opps!.. ..Email already exists!"}), 400
             my_account = User(email, firstname, lastname, password)
             my_account = my_account.signup()
             my_account["user_id"] = len(user_list.get_all_users()) + 1
             user_list.add_user(my_account)
-            return jsonify({"message": "You've sucessfully created an account"})
+            return jsonify({"message": "You've sucessfully created an account"}), 201
         except Exception as e:
             e = {"Format": "Request format is invalid"}
-            return jsonify(e)
+            return jsonify(e), 400
