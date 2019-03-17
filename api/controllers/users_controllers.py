@@ -1,6 +1,7 @@
 from api.models.users_model import User, Users
 from flask import jsonify, request
 from api.validators import Validators
+from api.jwt_token import encode_auth_token
 
 user_list = Users()
 Validator = Validators()
@@ -31,17 +32,22 @@ class UsersController:
             return jsonify(e), 400
     
     def user_signin(self):
-        data = request.get_json()
-        email = data.get("email")
-        password = data.get("password")
-        user_details = [email, password]
-        for detail in user_details:
-            if detail.isspace() or len(detail) == 0:
-                return jsonify({"missing": "All fields must be filled"})
-        if len(user_list.get_all_users()) == 0:
-            return jsonify({"message": "Email does not exist"})
-        for user in user_list.get_all_users():
-            if user["email"] == email and user["password"] == password:
-                return jsonify({"yaay": "yaay"})
-            return jsonify({"noo": "noo"})
+        try:
+            data = request.get_json()
+            email = data.get("email")
+            password = data.get("password")
+            user_details = [email, password]
+            for detail in user_details:
+                if detail.isspace() or len(detail) == 0:
+                    return jsonify({"missing": "All fields must be filled"})
+            if len(user_list.get_all_users()) == 0:
+                return jsonify({"message": "Email does not exist"})
+            for user in user_list.get_all_users():
+                if user["email"] == email and user["password"] == password:
+                    token = encode_auth_token(email).decode("utf-8")
+                    return jsonify({"token": token, "message": "sucessfully logged in"})
+                return jsonify({"message": "Oops... Invalid login credentials"})
+        except Exception as e:
+            e = {"Format": "Request format is invalid"}
+            return jsonify(e), 400
 
