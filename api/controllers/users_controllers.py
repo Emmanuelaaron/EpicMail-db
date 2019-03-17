@@ -29,3 +29,19 @@ class UsersController:
         except Exception as e:
             e = {"Format": "Request format is invalid"}
             return jsonify(e), 400
+    
+    def user_signin(self):
+        data = request.get_json()
+        email = data.get("email")
+        password = data.get("password")
+        user_details = [email, password]
+        for detail in user_details:
+            if detail.isspace() or len(detail) == 0:
+                return jsonify({"missing": "All fields must be filled"})
+        if len(user_list.get_all_users()) == 0:
+            return jsonify({"message": "Email does not exist"})
+        for user in user_list.get_all_users():
+            if user["email"] == email and user["password"] == password:
+                return jsonify({"yaay": "yaay"})
+            return jsonify({"noo": "noo"})
+
