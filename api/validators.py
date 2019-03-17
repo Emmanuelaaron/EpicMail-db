@@ -15,6 +15,11 @@ class Validators:
         email_validator = re.compile("(^[a-zA-z0-9_.]+@[a-zA-z0-9-]+\.[a-z]+$)")
         if not email_validator.match(email):
             self.errors.append({"message": "Invalid email"})
+    
+    # @staticmethod
+    # def email_validate(email):
+    #     email_validator = re.compile("(^[a-zA-z0-9_.]+@[a-zA-z0-9-]+\.[a-z]+$)")
+    #     return email_validator.match(email)
 
     def validate_input_fields(self, details):
         for detail in details:
