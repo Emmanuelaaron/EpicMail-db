@@ -71,3 +71,20 @@ class Test_users(BaseTest):
         reply = json.loads(resp.data.decode())
         self.assertEqual(resp.status_code, 400)
         self.assertEqual(reply["Format"], "Request format is invalid")
+
+    def test_signin_user(self):
+        self.user = {
+            "email": "sonibil@gmail.com",
+            "firstname": "sonibil",
+            "lastname": "isabirye",
+            'password': "uhyd7y"
+        }
+        resp = self.signup_user(self.user)
+        resp = app.test_client(self).post("/api/v1/auth/login",
+                content_type="application/json", data=json.dumps({
+                    "email": "sonibil@gmail.com",
+                    "password": "uhyd7y"
+                })
+        )
+        reply = json.loads(resp.data.decode())
+        self.assertEqual(resp.status_code, 201)

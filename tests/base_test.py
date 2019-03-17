@@ -1,6 +1,7 @@
 import unittest
 from api import app
 from flask import json
+# import jwt
 
 class BaseTest(unittest.TestCase):
     def setup(self):
