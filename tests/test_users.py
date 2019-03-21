@@ -1,6 +1,7 @@
 from tests.base_test import BaseTest
 from flask import json
 from api import app
+import jwt
 
 class Test_users(BaseTest):
     def test_signup_user(self):

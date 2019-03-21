@@ -6,7 +6,15 @@ class Users:
         return self.users
 
     def add_user(self, user):
-        return self.users.append(user)
+        self.users.append(user)
+
+    def find_user_by_id(self, user_id):
+        user = [user for user in self.users if user["user_id"] == user_id]
+        return user
+
+    def find_user_id_by_email(self, email):
+        user_id = [user["user_id"] for user in self.users if user["email"] == email]
+        return user_id
 
 class User:
     def __init__(self, email, firstname, lastname, password):
