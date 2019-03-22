@@ -1,5 +1,6 @@
 import datetime
-class Messages:
+
+class Messages():
     def __init__(self):
         self.messages = []
 
@@ -7,12 +8,19 @@ class Messages:
         return self.messages.append(email)
 
     def get_all_messages(self):
-        return self.messages
+            return self.messages
+
+    def get_all_messages_by_user_id(self, user_id):
+        messages = [message for message in self.messages if message["receiver_id"] == user_id]
+        return messages
+
 
 class Message():
+    
     def __init__(self, subject, message):
         self.subject = subject
         self.message = message
+
 
     def create_message(self):
         return {
@@ -22,3 +30,4 @@ class Message():
             "createdOn":  datetime.date.today()
 
         }
+

@@ -20,3 +20,9 @@ class BaseTest(unittest.TestCase):
         signedup_user = app.test_client(self).post("/api/v1/auth/signup", 
         content_type="application/json", data=json.dumps(user))
         return signedup_user
+
+    def login_user(self, user):
+        loggedin_user = app.test_client(self).post("api/v1/auth/login",
+        content_type="application/json", data=json.dumps(user))
+        token = json.loads(loggedin_user.data.decode())
+        return token["token"]

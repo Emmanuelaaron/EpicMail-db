@@ -33,24 +33,24 @@ class UsersController:
             return jsonify(e), 400
     
     def user_signin(self):
-        # try:
+        try:
             data = request.get_json()
             email = data.get("email")
             password = data.get("password")
             user_details = [email, password]
             for detail in user_details:
                 if detail.isspace() or len(detail) == 0:
-                    return jsonify({"missing": "All fields must be filled"})
+                    return jsonify({"missing": "All fields must be filled"}), 400
             if len(user_list.get_all_users()) == 0:
-                return jsonify({"message": "Email does not exist"})
-            for user in user_list.get_all_users():
-                if user["email"] == email and user["password"] == password:
-                    token = auth.encode_auth_token(email).decode("utf-8")
-                    return jsonify({"token": token, "message": "sucessfully logged in"}), 201
-                return jsonify({"message": "Oops... Invalid login credentials"})
-        # except Exception as e:
-        #     e = {"Format": "Request format is invalid"}
-        #     return jsonify(e), 400
+                return jsonify({"message": "Email does not exist"}), 200
+            true_user = user_list.match_user_email_and_password(email, password)
+            if true_user:
+                token = auth.encode_auth_token(email).decode("utf-8")
+                return jsonify({"token": token, "message": "sucessfully logged in"}), 201
+            return jsonify({"message": "Oops... Invalid login credentials"}), 400
+        except Exception as e:
+            e = {"Format": "Request format is invalid"}
+            return jsonify(e), 400
 
     def get_users(self):
         return jsonify(user_list.get_all_users())

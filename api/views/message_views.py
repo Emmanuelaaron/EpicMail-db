@@ -33,3 +33,8 @@ def token_required(f):
 @token_required
 def send_message(user_email):
     return message.send_email()
+
+@message_blueprint.route("messages")
+@token_required
+def get_all_received_email(user_email):
+    return message.get_all_received_emails()
