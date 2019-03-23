@@ -54,7 +54,7 @@ class message_controller():
     def get_all_received_emails(self):
         receiver_email = Decoder.decoded_token()
         receiver_id = user_list.find_user_id_by_email(receiver_email)[0]
-        inbox_messages = messages.get_all_messages_by_user_id(receiver_id)
+        inbox_messages = messages.get_all_received_messages_by_user_id(receiver_id)
         if not inbox_messages:
             return jsonify({
                 "status": 200,
@@ -63,4 +63,22 @@ class message_controller():
         return jsonify({
             "status": 200,
             "data": inbox_messages
+        }), 200
+
+    def delete_specific_email(self, message_id):
+        user_email = Decoder.decoded_token()
+        user_id = user_list.find_user_id_by_email(user_email)[0]
+        messages_ = messages.get_all_messages_by_user_id(user_id)
+        if not messages_:
+            return jsonify({
+                "message": "You have no sent or received messages!"
+            })
+        to_be_deleted = messages.get_message_with_specific_message_id(message_id)
+        if not to_be_deleted:
+            return jsonify({
+                "message": "Message with that id does not exist among your emails"
+            })
+        messages.get_all_messages().remove(to_be_deleted[0])
+        return jsonify({
+            "message": "you've sucessfully deleted the message"
         }), 200

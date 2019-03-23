@@ -26,3 +26,4 @@ class BaseTest(unittest.TestCase):
         content_type="application/json", data=json.dumps(user))
         token = json.loads(loggedin_user.data.decode())
         return token["token"]
+
