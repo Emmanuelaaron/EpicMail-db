@@ -68,7 +68,7 @@ class Test_messages(BaseTest):
             "password": "12345"
         }
         self.message = {
-            "subject": "yes it is",
+            "subject": "  ",
 	        "message": "blah blah",
 	        "receiver_id": 4
         }
@@ -83,7 +83,7 @@ class Test_messages(BaseTest):
             )
         reply = json.loads(resp.data.decode())
         self.assertEqual(resp.status_code, 400)
-        self.assertIn("You can't send a message to your self", str(reply))
+        self.assertIn("All fields must be filled", str(reply))
 
     def test_get_all_email(self):
         self.user = {
@@ -104,5 +104,22 @@ class Test_messages(BaseTest):
         self.assertEqual(resp.status_code, 200)
         self.assertIn("'Oops..you do not have any messages!", str(reply))
 
-
-        
+    def test_get_sent_emails(self):
+        self.user = {
+            "email": "resty@gmail.com",
+            "firstname": "sonibil",
+            "lastname": "kironde",
+            "password": "12345"
+        }
+        self.signup_user(self.user)
+        login = self.login_user({
+                "email": "resty@gmail.com",
+                "password": "12345"
+            })
+        resp = app.test_client(self).get("api/v1/messages/sent",
+                headers={"x-access-token": login},
+            )
+        reply = json.loads(resp.data.decode())
+        self.assertEqual(resp.status_code, 200)
+        self.assertIn("Oops.. you don't have any sent messages!", str(reply))
+ 

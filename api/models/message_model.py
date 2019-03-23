@@ -13,7 +13,10 @@ class Messages():
     def get_all_messages_by_user_id(self, user_id):
         messages = [message for message in self.messages if message["receiver_id"] == user_id]
         return messages
-
+        
+    def get_all_sent_messages_by_user_id(self, user_id):
+        messages = [message for message in self.messages if message["sender_id"] == user_id] 
+        return messages
 
 class Message():
     

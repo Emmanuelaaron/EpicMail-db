@@ -38,3 +38,8 @@ def send_message(user_email):
 @token_required
 def get_all_received_email(user_email):
     return message.get_all_received_emails()
+
+@message_blueprint.route("messages/sent")
+@token_required
+def get_all_sent_emails(user_email):
+    return message.get_sent_emails()

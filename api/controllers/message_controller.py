@@ -53,14 +53,36 @@ class message_controller():
 
     def get_all_received_emails(self):
         receiver_email = Decoder.decoded_token()
+        if len(user_list.find_user_id_by_email(receiver_email)) == 0:
+            return jsonify({
+                "message": "You do not have an account here! Please signup"
+            })
         receiver_id = user_list.find_user_id_by_email(receiver_email)[0]
         inbox_messages = messages.get_all_messages_by_user_id(receiver_id)
         if not inbox_messages:
             return jsonify({
                 "status": 200,
                 "message": "Oops..you do not have any messages!"
-            })
+            }), 200
         return jsonify({
             "status": 200,
             "data": inbox_messages
         }), 200
+
+    def get_sent_emails(self):
+        sender_email = Decoder.decoded_token()
+        if len(user_list.find_user_id_by_email(sender_email)) == 0:
+            return jsonify({
+                "message": "You do not have an account here! Please signup"
+            })
+        send_id = user_list.find_user_id_by_email(sender_email)[0]
+        sent_messages = messages.get_all_sent_messages_by_user_id(send_id)
+        if not sent_messages:
+            return jsonify({
+                "status": 200,
+                "message": "Oops.. you don't have any sent messages!"
+            }), 200
+        return jsonify({
+            "status": 200,
+            "data": sent_messages
+        })
