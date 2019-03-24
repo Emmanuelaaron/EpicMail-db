@@ -54,7 +54,7 @@ class message_controller():
     def get_all_received_emails(self):
         receiver_email = Decoder.decoded_token()
         receiver_id = user_list.find_user_id_by_email(receiver_email)[0]
-        inbox_messages = messages.get_all_messages_by_user_id(receiver_id)
+        inbox_messages = messages.get_all_received_messages_by_user_id(receiver_id)
         if not inbox_messages:
             return jsonify({
                 "status": 200,
@@ -64,3 +64,17 @@ class message_controller():
             "status": 200,
             "data": inbox_messages
         }), 200
+
+    def get_specific_email(self, message_id):
+        user_email = Decoder.decoded_token()
+        user_id = user_list.find_user_id_by_email(user_email)[0]
+        messages_ = messages.get_specific_message_using_user_id_and_message_id(user_id, message_id)
+        if not messages_:
+            return jsonify({
+                "status": 200,
+                "message": "message does not exist"
+            })
+        return jsonify({
+            "status": 200,
+            "data": messages_
+        })
