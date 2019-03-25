@@ -1,5 +1,7 @@
 # EpicMail-Api
 
+[![Coverage Status](https://coveralls.io/repos/github/Emmanuelaaron/EpicMail-Api/badge.svg?branch=develop)](https://coveralls.io/github/Emmanuelaaron/EpicMail-Api?branch=develop)
+
 
 ## Getting started
 You can clone this [repo](https://github.com/Emmanuelaaron/EpicMail-Api.git) on your local machine or checkout the user-interface on [gh-pages](https://emmanuelaaron.github.io/EpicMail/UI/temps/signin.html).
