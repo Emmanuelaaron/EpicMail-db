@@ -104,5 +104,20 @@ class Test_messages(BaseTest):
         self.assertEqual(resp.status_code, 200)
         self.assertIn("'Oops..you do not have any messages!", str(reply))
 
-
-        
+    def test_delete_email(self):
+        self.user = {
+            "email": "arnold@gmail.com",
+            "firstname": "sonibil",
+            "lastname": "kironde",
+            "password": "12345"
+        }
+        self.signup_user(self.user)
+        login = self.login_user({
+            "email": "arnold@gmail.com",
+            "password": "12345"
+        })
+        resp = app.test_client(self).delete("api/v1/messages/1",
+            headers={"x-access-token": login}
+            )
+        reply = json.loads(resp.data.decode())
+        self.assertEqual(resp.status_code, 200)
