@@ -29,12 +29,12 @@ def token_required(f):
         return f(user_email, *args, **kwargs)
     return decorated
 
-@message_blueprint.route("messages", methods=['POST'])
+@message_blueprint.route("/messages", methods=['POST'])
 @token_required
 def send_message(user_email):
     return message.send_email()
 
-@message_blueprint.route("messages")
+@message_blueprint.route("/messages")
 @token_required
 def get_all_received_email(user_email):
     return message.get_all_received_emails()
@@ -43,3 +43,8 @@ def get_all_received_email(user_email):
 @token_required
 def get_all_sent_emails(user_email):
     return message.get_sent_emails()
+  
+@message_blueprint.route("/messages/<int:message_id>", methods=['DELETE'])
+@token_required
+def delete_email(user_email, message_id):
+    return message.delete_specific_email(message_id)

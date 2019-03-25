@@ -107,6 +107,10 @@ class Test_messages(BaseTest):
     def test_get_sent_emails(self):
         self.user = {
             "email": "resty@gmail.com",
+          
+    def test_delete_email(self):
+        self.user = {
+            "email": "arnold@gmail.com",
             "firstname": "sonibil",
             "lastname": "kironde",
             "password": "12345"
@@ -123,3 +127,11 @@ class Test_messages(BaseTest):
         self.assertEqual(resp.status_code, 200)
         self.assertIn("Oops.. you don't have any sent messages!", str(reply))
  
+            "email": "arnold@gmail.com",
+            "password": "12345"
+        })
+        resp = app.test_client(self).delete("api/v1/messages/1",
+            headers={"x-access-token": login}
+            )
+        reply = json.loads(resp.data.decode())
+        self.assertEqual(resp.status_code, 200)
