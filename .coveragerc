@@ -7,9 +7,4 @@ omit =
         *.pyc
         */home/travis/virtualenv/*
         */__init__.py 
-        api/controllers/message_controller.py 
-        api/controllers/users_controller.py
-        api/validators.py
-        api/models/message_model.py
-        api/models/users_model.py
         run.py

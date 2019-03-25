@@ -1,0 +1,5 @@
+exclude_patterns :
+- "tests/test_users.py"
+- "tests/test_messages.py"
+- "api/models/message_model.py"
+- "api/models/users_model.py

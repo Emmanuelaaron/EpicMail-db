@@ -1,6 +1,8 @@
 # EpicMail-Api
 
+[![Build Status](https://travis-ci.org/Emmanuelaaron/EpicMail-Api.svg?branch=develop)](https://travis-ci.org/Emmanuelaaron/EpicMail-Api)
 [![Coverage Status](https://coveralls.io/repos/github/Emmanuelaaron/EpicMail-Api/badge.svg?branch=develop)](https://coveralls.io/github/Emmanuelaaron/EpicMail-Api?branch=develop)
+[![Maintainability](https://api.codeclimate.com/v1/badges/6be725b6eef421b3bdb2/maintainability)](https://codeclimate.com/github/Emmanuelaaron/EpicMail-Api/maintainability)
 
 
 ## Getting started
