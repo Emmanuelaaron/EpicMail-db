@@ -15,3 +15,7 @@ def signup_user():
 @users_blueprint.route('/auth/login', methods=["POST"])
 def login_user():
     return User.user_signin()
+
+@users_blueprint.route('/users')
+def get_users():
+    return User.get_users()
