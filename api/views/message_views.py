@@ -39,6 +39,11 @@ def send_message(user_email):
 def get_all_received_email(user_email):
     return message.get_all_received_emails()
 
+@message_blueprint.route("messages/<int:message_id>")
+@token_required
+def get_specific_message(user_email, message_id):
+    return message.get_specific_email(message_id)
+  
 @message_blueprint.route("messages/sent")
 @token_required
 def get_all_sent_emails(user_email):

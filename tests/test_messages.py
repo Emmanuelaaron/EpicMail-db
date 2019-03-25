@@ -103,7 +103,11 @@ class Test_messages(BaseTest):
         reply = json.loads(resp.data.decode())
         self.assertEqual(resp.status_code, 200)
         self.assertIn("'Oops..you do not have any messages!", str(reply))
-
+        
+    def test_get_specific_email(self):
+        self.user = {
+            "email": "precious@gmail.com",
+          
     def test_get_sent_emails(self):
         self.user = {
             "email": "resty@gmail.com",
@@ -117,6 +121,13 @@ class Test_messages(BaseTest):
         }
         self.signup_user(self.user)
         login = self.login_user({
+            "email": "precious@gmail",
+            "password": "12345"
+        })
+        resp = app.test_client(self).get("api/v1/messages/7878",
+                headers={"x-access-token": login})
+        reply = json.loads(resp.data.decode())
+        self.assertEqual(resp.status_code, 200)
                 "email": "resty@gmail.com",
                 "password": "12345"
             })

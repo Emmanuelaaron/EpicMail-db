@@ -20,6 +20,10 @@ class Messages():
     def get_all_messages_by_user_id(self, user_id):
         messages = [message for message in self.messages if message["receiver_id"] == user_id or message["sender_id"] == user_id]
         return messages
+      
+    def get_specific_message_using_user_id_and_message_id(self, user_id, message_id):
+        messages = [message for message in self.messages if message["receiver_id"] == user_id or message["sender_id"] == user_id and message["message_id"] == message_id]
+        return messages
 
     def get_message_with_specific_message_id(self, message_id):
         message = [message for message in self.messages if message["message_id"] == message_id]

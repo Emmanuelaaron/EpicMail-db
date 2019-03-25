@@ -68,6 +68,20 @@ class message_controller():
             "status": 200,
             "data": inbox_messages
         }), 200
+
+    def get_specific_email(self, message_id):
+        user_email = Decoder.decoded_token()
+        user_id = user_list.find_user_id_by_email(user_email)[0]
+        messages_ = messages.get_specific_message_using_user_id_and_message_id(user_id, message_id)
+        if not messages_:
+            return jsonify({
+                "status": 200,
+                "message": "message does not exist"
+            })
+        return jsonify({
+            "status": 200,
+            "data": messages_
+        })
       
     def get_sent_emails(self):
         sender_email = Decoder.decoded_token()
@@ -104,4 +118,3 @@ class message_controller():
         return jsonify({
             "message": "you've sucessfully deleted the message"
         }), 200
-
