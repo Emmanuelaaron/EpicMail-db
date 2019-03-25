@@ -70,7 +70,7 @@ class Test_messages(BaseTest):
         self.message = {
             "subject": "  ",
 	        "message": "blah blah",
-	        "receiver_id": 4
+	        "receiver_id": 2
         }
         self.signup_user(self.user)
         login = self.login_user({
@@ -85,7 +85,7 @@ class Test_messages(BaseTest):
         self.assertEqual(resp.status_code, 400)
         self.assertIn("All fields must be filled", str(reply))
 
-    def test_get_all_email(self):
+    def test_get_all_received_email(self):
         self.user = {
             "email": "jason@gmail.com",
             "firstname": "sonibil",
@@ -107,42 +107,59 @@ class Test_messages(BaseTest):
     def test_get_specific_email(self):
         self.user = {
             "email": "precious@gmail.com",
-          
-    def test_get_sent_emails(self):
-        self.user = {
-            "email": "resty@gmail.com",
-          
-    def test_delete_email(self):
-        self.user = {
-            "email": "arnold@gmail.com",
-            "firstname": "sonibil",
-            "lastname": "kironde",
-            "password": "12345"
+            "firstname": "emmerson",
+            "lastname": "kburu",
+            "password": "1234"
         }
-        self.signup_user(self.user)
+        self.signup_user(self.user) 
         login = self.login_user({
-            "email": "precious@gmail",
-            "password": "12345"
+            "email": "precious@gmail.com",
+            "password": "1234"
+
         })
-        resp = app.test_client(self).get("api/v1/messages/7878",
-                headers={"x-access-token": login})
+        resp = app.test_client(self).get("api/v1/messages/1455",
+                headers={"x-access-token": login},
+            )
         reply = json.loads(resp.data.decode())
         self.assertEqual(resp.status_code, 200)
-                "email": "resty@gmail.com",
-                "password": "12345"
-            })
+        self.assertIn("message does not exist", str(reply))
+
+    def test_get_sent_emails(self):
+        self.user = {
+            "email": "Dorcas@gmail.com",
+            "firstname": "emmerson",
+            "lastname": "kburu",
+            "password": "1234"
+        }
+        self.signup_user(self.user) 
+        login = self.login_user({
+            "email": "Dorcas@gmail.com",
+            "password": "1234"
+
+        })
         resp = app.test_client(self).get("api/v1/messages/sent",
                 headers={"x-access-token": login},
             )
         reply = json.loads(resp.data.decode())
         self.assertEqual(resp.status_code, 200)
-        self.assertIn("Oops.. you don't have any sent messages!", str(reply))
- 
-            "email": "arnold@gmail.com",
-            "password": "12345"
+        self.assertIn("Oops..you do not have any messages!", str(reply))
+          
+    def test_delete_email(self):
+        self.user = {
+            "email": "micheal@gmail.com",
+            "firstname": "emmerson",
+            "lastname": "kburu",
+            "password": "1234"
+        }
+        self.signup_user(self.user) 
+        login = self.login_user({
+            "email": "micheal@gmail.com",
+            "password": "1234"
+
         })
-        resp = app.test_client(self).delete("api/v1/messages/1",
-            headers={"x-access-token": login}
+        resp = app.test_client(self).get("api/v1/messages/1455",
+                headers={"x-access-token": login},
             )
         reply = json.loads(resp.data.decode())
         self.assertEqual(resp.status_code, 200)
+        self.assertIn("message does not exist", str(reply))

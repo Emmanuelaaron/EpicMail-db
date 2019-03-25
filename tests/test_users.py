@@ -1,17 +1,16 @@
 from tests.test_base import BaseTest
 from flask import json
 from api import app
-# import jwt
 
 class Test_users(BaseTest):
     def test_signup_user(self):
-        self.user = {
+        self.user2 = {
             "email": "isa@gmail.com",
             "firstname": "sonibil",
             "lastname": "kironde",
             "password": "12345"
-        }
-        resp = self.signup_user(self.user)
+        } 
+        resp = self.signup_user(self.user2)
         reply = json.loads(resp.data.decode())
         self.assertEqual(resp.status_code, 201)
         self.assertIn("You've sucessfully created an account", str(reply))
