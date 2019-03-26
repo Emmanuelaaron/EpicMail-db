@@ -4,6 +4,7 @@ from flask import json
 # import jwt
 
 class BaseTest(unittest.TestCase):
+
     def setup(self):
         self.tester = app.test_client(self)
         self.user = {
@@ -13,6 +14,7 @@ class BaseTest(unittest.TestCase):
             "password": "12323q"
         }
 
+        
         self.signup_user(self.user)
 
 
